@@ -25,9 +25,11 @@ Route::get('/login', function () {
     return view('login');
 });
 
-
+//////////////////////////// เหลือ middleware ////////////////////////////////////
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', function () {
         return view('home');
+
+
     });
 });
