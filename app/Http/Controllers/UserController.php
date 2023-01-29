@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
+use function PHPSTORM_META\map;
+
 class UserController extends Controller
 {
     public function index() {
@@ -30,17 +32,20 @@ class UserController extends Controller
                 ], 400);
             }
 
-            $createUser = new User();
+            $user = User::create([
+                'name' => $req->name,
+                'email' => $req->email,
+                'password' => Hash::make($req->password)
+            ]);
 
-            $createUser->name = $req->name;
-            $createUser->email = $req->email;
-            $createUser->password = Hash::make($req->password);
-            $result = $createUser->save();
+            $token = $user->createToken('myapptoken')->plainTextToken;
 
-            if ($result) {
+
+            if ($user) {
                 return response([
                     'message' => 'ok',
-                    'description' => 'Created Successfully'
+                    'description' => 'Created Successfully',
+                    'token' => $token
 
                 ], 201);
             } else {
@@ -87,9 +92,10 @@ class UserController extends Controller
     public function onLogout() {
 
         Auth::logout();
-       return response()->json([
-            'message' => 'logout ok'
-       ]);
+    //    return response()->json([
+    //         'message' => 'logout ok',
+    //         'user' => Auth::user()
+    //    ]);
 
     }
 }

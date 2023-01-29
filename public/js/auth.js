@@ -20,7 +20,7 @@ async function registerHandler() {
             data: data,
         })
             .then((res) => {
-                console.log(res.message);
+                console.log(res);
 
                 Swal.fire({
                     icon: "success",
