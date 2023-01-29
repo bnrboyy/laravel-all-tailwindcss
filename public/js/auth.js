@@ -1,4 +1,3 @@
-
 async function registerHandler() {
     let data = {
         name: document.querySelector("#username").value,
@@ -48,39 +47,42 @@ async function onLogin() {
     let data = {
         email: document.querySelector("#email").value,
         password: document.querySelector("#password").value,
-    }
+    };
 
     const response = await axios({
         url: "api/user/login",
         method: "POST",
         data: data,
-
-    }).then((res) => {
-
-        Swal.fire({
-            icon: "success",
-            text: "login successfully",
-            showConfirmButton: false,
-            timer: '2000'
-        }).then(() => {
-            window.location.href = "/home"
-        })
-
-    }).catch(() => {
-        Swal.fire({
-            icon: "error",
-            text: "email or password is incorrect !!",
-            showConfirmButton: false,
-            timer: '2000'
-        }).then(() => {
-            window.location.href = "/login"
-        })
-
     })
-
+        .then((res) => {
+            Swal.fire({
+                icon: "success",
+                text: "login successfully",
+                showConfirmButton: false,
+                timer: "2000",
+            }).then(() => {
+                window.location.href = "/home";
+            });
+        })
+        .catch(() => {
+            Swal.fire({
+                icon: "error",
+                text: "email or password is incorrect !!",
+                showConfirmButton: false,
+                timer: "2000",
+            }).then(() => {
+                window.location.href = "/login";
+            });
+        });
 }
 
-
-function test() {
-    /// test ....
+async function onLogout() {
+    const response = await axios
+        .get("api/user/logout")
+        .then((res) => {
+            console.log(res);
+        })
+        .catch((err) => {
+            console.log(err);
+        });
 }

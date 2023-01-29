@@ -23,13 +23,13 @@ Route::get('/register', function () {
 
 Route::get('/login', function () {
     return view('login');
-});
+})->name('login');
 
-//////////////////////////// เหลือ middleware ////////////////////////////////////
-Route::group(['middleware' => 'auth'], function () {
+//////////////////////////// middleware Route////////////////////////////////////
+
+// Protected routes
+Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/home', function () {
         return view('home');
-
-
     });
 });
